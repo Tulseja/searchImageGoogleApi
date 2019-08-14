@@ -16,9 +16,12 @@ import com.doitunzo.imageSearch.R
 import com.doitunzo.imageSearch.responsePOJO.Image
 import com.doitunzo.imageSearch.utils.Resource
 import com.google.gson.Gson
+import com.doitunzo.imageSearch.utils.CustomHttpRequest
 
-
-
+import com.android.volley.Request
+import com.doitunzo.imageSearch.CUSTOM_SEARCH_API_KEY
+import com.doitunzo.imageSearch.CUSTOM_SEARCH_CX_KEY
+import com.doitunzo.imageSearch.utils.HttpResponseListener
 
 
 class RemoteDataSource(private val appContext: Context){
@@ -33,7 +36,7 @@ class RemoteDataSource(private val appContext: Context){
         val data = MutableLiveData<Resource<Image>>()
         data.value = Resource.loading(isPaginationState(pageNum.toInt()))
 
-        var url = "https://www.googleapis.com/customsearch/v1?q=$query&cx=011476162607576381860:ra4vmliv9ti&key=AIzaSyDpMYRjzmp67tQoGDmCk8iun_rY657Lefs"
+        var url = "https://www.googleapis.com/customsearch/v1?q=$query&cx=$CUSTOM_SEARCH_CX_KEY&key=$CUSTOM_SEARCH_API_KEY"
         url+="&page=$pageNum"
 
 
@@ -43,7 +46,7 @@ class RemoteDataSource(private val appContext: Context){
         }
         val queue = Volley.newRequestQueue(appContext)
 
-        val getRequest: StringRequest = object : StringRequest(Method.GET, url, Response.Listener {
+        /*val getRequest: StringRequest = object : StringRequest(Method.GET, url, Response.Listener {
             // response
             val gson = Gson()
 //            val imageListType = object : TypeToken<List<Image>>() {}.type
@@ -61,8 +64,25 @@ class RemoteDataSource(private val appContext: Context){
                 header["Authorization"] = "Client-ID be119b83c0e66e83832a6dd5bce8e76ea6639e35850e25909d1b1d95d55be930"
                 return header
             }
-        }
-        queue.add(getRequest)
+        }*/
+        val request = CustomHttpRequest(
+            Request.Method
+                .GET, url, 1, null, null, Image::class.java, object : HttpResponseListener {
+                override fun onResponseSuccess(response: Any?, requestID: Int) {
+                    if(response is Image){
+                        data.value = Resource.success(response,isPaginationState(pageNum.toInt()))
+                    }
+                }
+
+                override fun onResponseError(error: VolleyError?, requestID: Int) {
+                    data.value = Resource.error(error,isPaginationState(pageNum.toInt()))
+                }
+
+            }
+        )
+//        not creating singleton here just for one request
+        Volley.newRequestQueue(appContext).add<Image>(request)
+        queue.add(request)
 
         return data
 

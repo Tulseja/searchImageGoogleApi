@@ -5,5 +5,10 @@
     <string name="generic_error_string">Something Went Wrong</string>
     <string name="enter_your_query_here">Enter Your Query Here</string>
     <string name="search">Search</string>
+    <string name="retry">Retry</string>
     <string name="valid_query">Please enter valid query</string>
+    <string name="more">More</string>
+    <string name="width">Width</string>
+    <string name="height">Height</string>
+    <string name="na">NA</string>
 </resources>

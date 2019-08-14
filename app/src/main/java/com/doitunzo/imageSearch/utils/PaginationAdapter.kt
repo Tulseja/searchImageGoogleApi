@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import com.doitunzo.imageSearch.R
 
 
+
+
+
 private const val LOADING_VIEW_TYPE = 0
 private const val ITEM_VIEW_TYPE = 1
 

@@ -24,7 +24,7 @@
                 android:focusable="true"
                 android:singleLine="true"
                 android:maxLength="60"
-                android:digits="A BCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+                android:digits="A BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
                 android:longClickable="false"
                 android:inputType="textCapCharacters"
                 android:hint="@string/enter_your_query_here"

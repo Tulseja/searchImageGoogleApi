@@ -36,13 +36,121 @@
 
 
     <ImageView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="200dp"
         tools:src="@mipmap/ic_launcher"
         android:layout_marginLeft="16dp"
         app:layout_constraintLeft_toRightOf="@id/left_guideline"
         app:layout_constraintTop_toBottomOf="@id/upper_guideline"
+        app:layout_constraintRight_toLeftOf="@id/right_guideline"
         android:id="@+id/display_iv"
-        android:scaleType="fitCenter"
+        android:scaleType="fitXY"
         android:layout_marginStart="16dp" />
+
+    <View android:layout_width="0dp" android:layout_height="40dp"
+          app:layout_constraintTop_toBottomOf="@id/display_iv"
+          android:background="#A9A9A9"
+          android:id="@+id/sep_view"
+          app:layout_constraintLeft_toLeftOf="@id/display_iv"
+          app:layout_constraintRight_toRightOf="@id/display_iv"/>
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              app:layout_constraintRight_toRightOf="@id/display_iv"
+              android:text="@string/more"
+              app:layout_constraintLeft_toLeftOf="@id/display_iv"
+              app:layout_constraintTop_toTopOf="@id/sep_view"
+              app:layout_constraintBottom_toBottomOf="@id/sep_view"
+              android:padding="10dp"
+              android:textColor="#ffffff"
+              android:textSize="17sp"
+              android:id="@+id/more_tv"
+    />
+    <android.support.constraint.Group android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                      app:constraint_referenced_ids="sep_view,more_tv"
+                                      android:id="@+id/more_grp"
+                                      android:visibility="visible"
+                                      tools:visibility="visible"
+    />
+
+    <View android:layout_width="0dp" android:layout_height="40dp"
+          app:layout_constraintTop_toBottomOf="@id/display_iv"
+          android:background="#A9A9A9"
+          android:id="@+id/width_view"
+          app:layout_constraintLeft_toLeftOf="@id/display_iv"
+          app:layout_constraintRight_toRightOf="@id/display_iv"/>
+
+
+
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="@string/width"
+              app:layout_constraintLeft_toLeftOf="@id/width_view"
+              app:layout_constraintTop_toTopOf="@id/width_view"
+              android:layout_marginLeft="5dp"
+              app:layout_constraintBottom_toBottomOf="@id/width_view"
+              android:padding="10dp"
+              android:textColor="#ffffff"
+              android:textSize="17sp"
+              android:id="@+id/width_tv"
+    />
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              tools:text="313"
+              app:layout_constraintRight_toRightOf="@id/width_view"
+              android:layout_marginRight="5dp"
+              app:layout_constraintTop_toTopOf="@id/width_view"
+              android:layout_marginLeft="5dp"
+              app:layout_constraintBottom_toBottomOf="@id/width_view"
+              android:padding="10dp"
+              android:textColor="#ffffff"
+              android:textSize="17sp"
+              android:id="@+id/width_value_tv"
+    />
+
+    <View android:layout_width="0dp" android:layout_height="4dp"
+          app:layout_constraintTop_toBottomOf="@id/width_view"
+          android:background="#ffffff"
+          android:id="@+id/sep_width_height_view"
+          app:layout_constraintLeft_toLeftOf="@id/display_iv"
+          app:layout_constraintRight_toRightOf="@id/display_iv"/>
+
+    <View android:layout_width="0dp" android:layout_height="40dp"
+          app:layout_constraintTop_toBottomOf="@id/sep_width_height_view"
+          android:background="#A9A9A9"
+          android:id="@+id/height_view"
+          app:layout_constraintLeft_toLeftOf="@id/display_iv"
+          app:layout_constraintRight_toRightOf="@id/display_iv"/>
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="@string/height"
+              app:layout_constraintLeft_toLeftOf="@id/display_iv"
+              app:layout_constraintTop_toTopOf="@id/height_view"
+              app:layout_constraintBottom_toBottomOf="@id/height_view"
+              android:padding="10dp"
+              android:layout_marginLeft="5dp"
+              android:textColor="#ffffff"
+              android:textSize="17sp"
+              android:id="@+id/height_tv"
+    />
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              tools:text="353"
+              app:layout_constraintRight_toRightOf="@id/height_view"
+              android:layout_marginRight="5dp"
+              app:layout_constraintTop_toTopOf="@id/height_view"
+              android:layout_marginLeft="5dp"
+              app:layout_constraintBottom_toBottomOf="@id/height_view"
+              android:padding="10dp"
+              android:textColor="#ffffff"
+              android:textSize="17sp"
+              android:id="@+id/height_value_tv"
+    />
+
+    <android.support.constraint.Group android:layout_width="wrap_content" android:layout_height="wrap_content"
+    app:constraint_referenced_ids="height_tv,height_view,height_value_tv,sep_width_height_view,width_value_tv,width_tv,width_view"
+                                      tools:visibility="gone"
+                                      android:visibility="gone"
+                                      android:id="@+id/width_height_grp"
+
+    />
+
 </android.support.constraint.ConstraintLayout>

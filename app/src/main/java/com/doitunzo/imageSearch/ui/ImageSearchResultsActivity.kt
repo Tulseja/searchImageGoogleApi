@@ -14,11 +14,9 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.util.Log
-import com.doitunzo.imageSearch.INITIAL_PAGE_NUM
-import com.doitunzo.imageSearch.QUERY_STRING
-import com.doitunzo.imageSearch.R
-import com.doitunzo.imageSearch.URL_FULL_SCREEN
+import com.doitunzo.imageSearch.*
 import com.doitunzo.imageSearch.responsePOJO.Image
+import com.doitunzo.imageSearch.responsePOJO.Items
 import com.doitunzo.imageSearch.utils.*
 import com.doitunzo.imageSearch.viewModel.ImageListViewModel
 
@@ -27,14 +25,21 @@ import kotlinx.android.synthetic.main.generic_error_retry.*
 
 
 class ImageSearchResultsActivity :  AppCompatActivity()  , HomeImageAdapter.ItemClickListener {
-
-    override fun onItemSelected(url: String) {
-//        openFullScreen()
-        val intent = Intent(this, FullScreenImageActivity::class.java)
-        if(!TextUtils.isEmpty(url))
-            intent.putExtra(URL_FULL_SCREEN,url)
-        startActivity(intent)
+    override fun onMoreClicked(position: Int) {
+        mHomeAdapter?.notifyItemChanged(position,MORE_CLICKED_EVENT)
     }
+
+    override fun onImageClicked(url: String?) {
+        if(!TextUtils.isEmpty(url)) {
+            val intent = Intent(this, FullScreenImageActivity::class.java).apply {
+                putExtra(URL_FULL_SCREEN, url)
+            }
+            startActivity(intent)
+        } else
+            Snackbar.make(parent_lyt,getString(R.string.generic_error_string), LENGTH_SHORT).show()
+
+    }
+
 
     companion object {
         fun startActivity(activity : Activity, query : String){
@@ -60,6 +65,7 @@ class ImageSearchResultsActivity :  AppCompatActivity()  , HomeImageAdapter.Item
         initializeRecyclerView()
         setListeners()
         observeViewModel()
+        supportActionBar?.hide()
     }
 
     private fun setListeners(){
@@ -103,8 +109,8 @@ class ImageSearchResultsActivity :  AppCompatActivity()  , HomeImageAdapter.Item
                         progress_bar.hide()
                         errorLyt.hide()
                     }
-                    if(it.data?.isNotEmpty() == true)
-                        bindView(it.data!!)
+                    if(it.data?.items?.isNotEmpty() == true)
+                        bindView(it.data?.items!!)
                 }
                 Status.LOADING -> {
                     isLoading = true
@@ -120,17 +126,16 @@ class ImageSearchResultsActivity :  AppCompatActivity()  , HomeImageAdapter.Item
         })
     }
 
-    private fun bindView(imageList : List<Image>){
-        if(imageList.size < 10){
+    private fun bindView(itemList : List<Items>){
+        if(itemList.size < 10){
             isLastPage = true
         }
-        mHomeAdapter?.updateData(imageList)
+        mHomeAdapter?.updateData(itemList)
     }
 
     private fun loadNextPage(){
         pageNum++
         viewModel.fetchImages(pageNum , query)
-        mHomeAdapter?.addLoadingViewFooter(Image())
     }
 
     inner class OnScrollListener(layoutManager: LinearLayoutManager) : PaginationScrollListener(layoutManager) {
