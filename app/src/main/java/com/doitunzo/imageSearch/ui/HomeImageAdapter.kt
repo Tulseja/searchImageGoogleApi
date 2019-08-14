@@ -85,7 +85,7 @@ class HomeImageAdapter(val clickListener: ItemClickListener) : PaginationAdapter
 
             Glide.with(displayIv).applyDefaultRequestOptions(requestOptions).load(uri).into(displayIv)
             displayIv.setOnClickListener {
-                clickListener.onImageClicked(item.pagemap?.cse_images?.get(0)?.src)
+                clickListener.onImageClicked(uri)
             }
             moreView.setOnClickListener {
                 clickListener.onMoreClicked(adapterPosition)
